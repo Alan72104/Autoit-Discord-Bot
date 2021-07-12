@@ -159,3 +159,7 @@ Func SocketClose()
     If $hSocket Then _WinHttpCloseHandle($hSocket)
     If $hConnection Then _WinHttpCloseHandle($hConnection)
 EndFunc
+
+Func GetPayload()
+	Return $payloadReceived
+EndFunc
