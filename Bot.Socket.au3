@@ -13,7 +13,7 @@ Global $hRequest = 0
 Global $hSocket = 0
 Global $iError = 0
 Global Const $bufferLength = 2048
-Global $payload = ""
+Global $payload = "", $payloadReceived = False
 
 Func SocketInit()
 	c("Socket connection initializing")
@@ -68,8 +68,6 @@ Func SocketInit()
 	_WinHttpCloseHandle($hRequest)
     $hRequestHandle = 0
 	
-	_WinHttpSetTimeouts($hSession, Default, Default, Default, 200)
-	
 	c("Socket initialization completed")
 EndFunc
 
@@ -112,14 +110,15 @@ Func SocketReceive()
 	c("Received gateway payload: $", 1, $payload)
 EndFunc
 
-Func SocketSend($msg)
+Func SocketSend($payload)
+	Local $msg = Json_Encode($payload)
 	Local $rtn = _WinHttpWebSocketSend($hSocket, _
 									   $WINHTTP_WEB_SOCKET_UTF8_MESSAGE_BUFFER_TYPE, _
 									   $msg)
-	If Not $rtn Then
+	If $rtn <> 0 Then
 		ThrowApiError("SocketSend", "_WinHttpWebSocketSend")
 	EndIf
-	c("Sent message to the server: ", 1, $msg)
+	c("Sent payload to the server: $", 1, $msg)
 EndFunc
 
 Func GetGatewayUrl()
@@ -166,4 +165,23 @@ EndFunc
 
 Func GetPayloadData()
 	Return Json_ObjGet(GetPayload(), "d")
+EndFunc
+
+Func GetPayloadOpCode()
+	Return Json_ObjGet(GetPayload(), "op")
+EndFunc
+
+Func PayloadProcessed()
+	$payloadReceived = False
+EndFunc
+
+Func MakePayload($opCode, $data = Null)
+	Local $newPayload = Json_ObjCreate()
+	$newPayload.Add("op", $opCode)
+	If $data Then
+		$newPayload.Add("d", $data)
+	Else
+		$newPayload.Add("d", Json_ObjCreate())
+	EndIf
+	Return $newPayload
 EndFunc

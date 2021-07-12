@@ -1,0 +1,13 @@
+#include-once
+
+Global Const $OPCODE_DISPATCH = 0
+Global Const $OPCODE_HEARTBEAT = 1
+Global Const $OPCODE_IDENTIFY = 2
+Global Const $OPCODE_PRESENCE_UPDATE = 3
+Global Const $OPCODE_VOICE_STATE_UPDATE = 4
+Global Const $OPCODE_RESUME = 6
+Global Const $OPCODE_RECONNECT = 7
+Global Const $OPCODE_REQUEST_GUILD_MEMBERS = 8
+Global Const $OPCODE_INVALID_SESSION = 9
+Global Const $OPCODE_HELLO = 10
+Global Const $OPCODE_HEARTBEAT_ACK = 11
