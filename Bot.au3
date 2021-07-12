@@ -16,6 +16,5 @@ Func Dispose()
 Endfunc
 
 Func Terminate()
-	Dispose()
 	Exit
 EndFunc
