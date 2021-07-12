@@ -7,6 +7,7 @@ OnAutoItExitRegister("Dispose")
 Func Main()
 	SocketInit()
 	SocketReceive()
+	c(GetPayloadData().Item("heartbeat_interval"))
 EndFunc
 
 Main()

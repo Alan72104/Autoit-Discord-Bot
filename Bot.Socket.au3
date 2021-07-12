@@ -13,7 +13,7 @@ Global $hRequest = 0
 Global $hSocket = 0
 Global $iError = 0
 Global Const $bufferLength = 2048
-Global $payloadReceived = ""
+Global $payload = ""
 
 Func SocketInit()
 	c("Socket connection initializing")
@@ -108,8 +108,8 @@ Func SocketReceive()
 		throw("SocketReceive", iv("Received unexpected buffer type: $", $bufferType))
 	EndIf
 	
-	$payloadReceived = BinaryToString($dataReceived)
-	c("Received gateway payload: $", 1, $payloadReceived)
+	$payload = BinaryToString($dataReceived)
+	c("Received gateway payload: $", 1, $payload)
 EndFunc
 
 Func SocketSend($msg)
@@ -161,5 +161,9 @@ Func SocketClose()
 EndFunc
 
 Func GetPayload()
-	Return $payloadReceived
+	Return Json_Decode($payload)
+EndFunc
+
+Func GetPayloadData()
+	Return Json_ObjGet(GetPayload(), "d")
 EndFunc
