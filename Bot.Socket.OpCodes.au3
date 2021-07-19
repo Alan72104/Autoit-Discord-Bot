@@ -1,5 +1,7 @@
 #include-once
 
+                                               ; Client action | Description
+                                               
 Global Const $OPCODE_DISPATCH = 0              ; Receive        An event was dispatched.
 Global Const $OPCODE_HEARTBEAT = 1             ; Send/Receive   Fired periodically by the client to keep the connection alive.
 Global Const $OPCODE_IDENTIFY = 2              ; Send           Starts a new session during the initial handshake.
