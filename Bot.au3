@@ -1,8 +1,10 @@
+#include-once
 #include "Include\LibDebug.au3"
 #include "Bot.Socket.au3"
 #include "Bot.Socket.OpCodes.au3"
+#include "Bot.MessageProcessor.au3"
 
-Global Const $token = ""
+Global Const $token = "NjUzOTMzNzAxNzA4NjQ0MzUz.Xe-NNw.Fg9YWytdr5pp37nrjVhY88AMSfA"
 Global $heartbeatInterval, $heartbeatTimer
 HotKeySet("{F7}", "Terminate")
 OnAutoItExitRegister("Dispose")
@@ -33,18 +35,14 @@ EndFunc
 
 Func Main()
 	SocketInit()
-	SocketReceive()
-	$heartbeatInterval = GetPayloadData().Item("heartbeat_interval")
-	$heartbeatTimer = TimerInit()
-	SocketSend(MakePayload($OPCODE_HEARTBEAT))
-	SocketReceive()
-	SendIdentify()
 	While 1
-		If TimerDiff($heartbeatTimer) >= $heartbeatInterval Then
-			$heartbeatTimer = TimerInit()
-			SocketSend(MakePayload($OPCODE_HEARTBEAT))
-			SocketReceive()
-		EndIf
+		SocketUpdate()
+		CheckMessage()
+		; If TimerDiff($heartbeatTimer) >= $heartbeatInterval Then
+			; $heartbeatTimer = TimerInit()
+			; SocketSend(MakePayload($OPCODE_HEARTBEAT))
+			; SocketReceive()
+		; EndIf
 	WEnd
 EndFunc
 

@@ -10,6 +10,11 @@ Global Const $WINHTTP_WEB_SOCKET_CLOSE_BUFFER_TYPE = 4
 
 Global Const $WINHTTP_WEB_SOCKET_SUCCESS_CLOSE_STATUS = 1000
 
+Global Const $tagWINHTTP_WEB_SOCKET_STATUS = "struct;" & _
+											     "dword dwBytesTransferred;" & _
+												 "int eBufferType;" & _
+											 "endstruct;"
+
 Func _WinHttpSetOptionNoParams($hInternet, $iOption)
     Local $aCall = DllCall($hWINHTTPDLL__WINHTTP, "bool", "WinHttpSetOption", _
             "handle", $hInternet, "dword", $iOption, "ptr", 0, "dword", 0)
