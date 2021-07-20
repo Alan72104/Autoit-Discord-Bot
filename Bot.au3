@@ -4,7 +4,7 @@
 #include "Bot.Socket.OpCodes.au3"
 #include "Bot.MessageProcessor.au3"
 
-Global Const $token = "NjUzOTMzNzAxNzA4NjQ0MzUz.Xe-NNw.Fg9YWytdr5pp37nrjVhY88AMSfA"
+Global $token = ""
 Global $heartbeatInterval, $heartbeatTimer
 HotKeySet("{F7}", "Terminate")
 OnAutoItExitRegister("Dispose")
@@ -34,6 +34,11 @@ Func SendIdentify()
 EndFunc
 
 Func Main()
+    $token = IniRead(@ScriptDir & "\Config.ini", "Token", "Token", "")
+    If $token = "" Then
+        throw("Main", "Token not found", "Please put your bot token in the ""Token"" key of the ""Token"" section in the ""Config.ini"" file")
+        Exit
+    EndIf
 	SocketInit()
 	While 1
 		SocketUpdate()
