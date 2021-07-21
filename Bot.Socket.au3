@@ -166,7 +166,8 @@ Func _WinhttpStatusCallback($hInternet, $iContext, $iInternetStatus, $pStatusInf
             Local $result = DllStructGetData($asyncResult, "dwResult")
             Local $error = DllStructGetData($asyncResult, "dwError")
             
-            Switch $result
+            Switch $result  ; The result could be 0 meaning the error isn't generated from a function call
+                Case 0
                 Case $API_RECEIVE_RESPONSE
                     c("The error occurred during a call to WinHttpReceiveResponse.", 0)
                 Case $API_QUERY_DATA_AVAILABLE
