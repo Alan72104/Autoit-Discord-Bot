@@ -14,6 +14,10 @@ Global Const $tagWINHTTP_WEB_SOCKET_STATUS = "struct;" & _
 											     "dword dwBytesTransferred;" & _
 												 "int eBufferType;" & _
 											 "endstruct;"
+Global Const $tagWINHTTP_ASYNC_RESULT = "struct;" & _
+                                            "dword_ptr dwResult;" & _
+                                            "dword dwError;" & _
+                                        "endstruct;"
 
 Func _WinHttpSetOptionNoParams($hInternet, $iOption)
     Local $aCall = DllCall($hWINHTTPDLL__WINHTTP, "bool", "WinHttpSetOption", _

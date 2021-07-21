@@ -161,6 +161,24 @@ Func _WinhttpStatusCallback($hInternet, $iContext, $iInternetStatus, $pStatusInf
         Case $WINHTTP_CALLBACK_STATUS_REQUEST_ERROR
 			c("REQUEST_ERROR, ", 0)
             c("An error occurred while sending an HTTP request.")
+            
+            Local $asyncResult = DllStructCreate($tagWINHTTP_ASYNC_RESULT, $pStatusInformation)
+            Local $result = DllStructGetData($asyncResult, "dwResult")
+            Local $error = DllStructGetData($asyncResult, "dwError")
+            
+            Switch $result
+                Case $API_RECEIVE_RESPONSE
+                    c("The error occurred during a call to WinHttpReceiveResponse.", 0)
+                Case $API_QUERY_DATA_AVAILABLE
+                    c("The error occurred during a call to WinHttpQueryDataAvailable.", 0)
+                Case $API_READ_DATA
+                    c("The error occurred during a call to WinHttpReadData.", 0)
+                Case $API_WRITE_DATA
+                    c("The error occurred during a call to WinHttpWriteData.", 0)
+                Case $API_SEND_REQUEST
+                    c("The error occurred during a call to WinHttpSendRequest.", 0)
+            EndSwitch
+            c("Error code: $", 1, $error)
 			
         Case $WINHTTP_CALLBACK_STATUS_REQUEST_SENT
 			c("REQUEST_SENT, ", 0)
@@ -204,14 +222,14 @@ EndFunc
 Func SocketUpdate()
     If $socketReadCompleted Then
         $socketReadCompleted = False
-        Sleep(100)
+        ; Sleep(100)
         SocketReceive()  ; Start receiving of the next payload
     EndIf
 	ResolvePayloads()
 	If $socketHeartbeatInterval And TimerDiff($socketHeartbeatTimer) > $socketHeartbeatInterval Then
 		; $socketHeartbeatInterval = GetPayloadData().Item("heartbeat_interval")
 		$socketHeartbeatTimer = TimerInit()
-		SocketSend(MakePayload($OPCODE_HEARTBEAT))
+		; SocketSend(MakePayload($OPCODE_HEARTBEAT))
 	EndIf
 EndFunc
 
