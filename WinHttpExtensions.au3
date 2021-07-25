@@ -11,9 +11,9 @@ Global Const $WINHTTP_WEB_SOCKET_CLOSE_BUFFER_TYPE = 4
 Global Const $WINHTTP_WEB_SOCKET_SUCCESS_CLOSE_STATUS = 1000
 
 Global Const $tagWINHTTP_WEB_SOCKET_STATUS = "struct;" & _
-											     "dword dwBytesTransferred;" & _
-												 "int eBufferType;" & _
-											 "endstruct;"
+                                                 "dword dwBytesTransferred;" & _
+                                                 "int eBufferType;" & _
+                                             "endstruct;"
 Global Const $tagWINHTTP_ASYNC_RESULT = "struct;" & _
                                             "dword_ptr dwResult;" & _
                                             "dword dwError;" & _
