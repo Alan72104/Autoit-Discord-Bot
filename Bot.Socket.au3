@@ -44,7 +44,7 @@ Func SocketInit()
     
     c("Opening request")
     $hRequest = _WinHttpOpenRequest($hConnection, "GET", "/?v=9&encoding=json", "")
-    If Not $hConnection Then
+    If Not $hRequest Then
         ThrowApiError("SocketInit", "_WinHttpOpenRequest")
     EndIf
     
